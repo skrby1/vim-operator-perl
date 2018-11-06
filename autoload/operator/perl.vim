@@ -29,7 +29,8 @@ function! operator#perl#do(motion_wise)
 	let l:si = &smartindent
 	set noautoindent nosmartindent
   if match(getreg('0'), '\n') != -1
-  	execute 'normal' '`['. l:v. '`]"0p\p=`]'
+  	"execute 'normal' '`['. l:v. '`]"0p\p=`]'
+  	execute 'normal' '`['. l:v. '`]"0p`]'
   else
   	execute 'normal' '`['. l:v. '`]"0gp'
   endif
