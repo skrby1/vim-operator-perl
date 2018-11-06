@@ -17,23 +17,16 @@ if ($wordcnt < 2){
   $ua->agent('PersonalDictCrawler/0.01');
 
 #Create a reqest
-  my $req = HTTP::Request->new(POST => "http://ejje.weblio.jp/content/$word");
+  my $req = HTTP::Request->new(GET => "https://ejje.weblio.jp/content/$word");
 
 #Pass reqest to the user agent and get a responce back
   my $res = $ua->request($req);
 
 #Check the outcome of the responce
   if($res->is_success) {
-    my $check;
     $meaning = $res->content;
     if ($meaning !~ /見つかりませんでした/s) {
-      my $chk = $meaning =~ s/\A.+<td class=eGCoreDta>\n?(.+?)\n?<\/td>.+\Z/$1/s;
-      if (!$chk) {
-        $meaning =~ s/\A.+<td class=content-explanation>\n?(.+?)\n?<\/td>.+\Z/$1/s;
-      }
-      $check = 1;
-    }
-    if ($check) {
+      $meaning =~ s/\A.+?<meta name=\"description\" content=\".+?\s(.+?)\s-\s.+\Z/$1/s;
       $meaning = "[".$meaning."]";
     } else {
       $meaning = "";
@@ -43,7 +36,7 @@ if ($wordcnt < 2){
   }
 
 #Create a reqest
-  $req = HTTP::Request->new(GET => "http://thesaurus.weblio.jp/antonym/content/$content");
+  $req = HTTP::Request->new(GET => "https://thesaurus.weblio.jp/antonym/content/$content");
 
 #Pass reqest to the user agent and get a responce back
   $res = $ua->request($req);
@@ -52,14 +45,11 @@ if ($wordcnt < 2){
   if($res->is_success) {
     my $check;
     $antonym = $res->content;
-    if ($antonym !~ /見つかりませんでした/s) {
-      $antonym =~ s/\A.+class=wtghtAntnm>\n?<a.+?>\n?(.+?)\n?<\/a>.+\Z/$1/s;
-      $check = 1
-    }
-    if ($check) {
+    if ($antonym!~ /見つかりませんでした/s) {
+      $antonym=~ s/\A.+?<meta name=\"description\" content=\"(.+?)\s-\s.+\Z/$1/s;
       $antonym = "<-> [".$antonym."]";
     } else {
-      $antonym = "";
+      $antonym= "";
     }
   } else {
     print $res->status_line, "\n";
