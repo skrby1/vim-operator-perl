@@ -7,6 +7,7 @@ function! operator#perl#do(motion_wise)
     let l:v = operator#user#visual_command_from_wise_name(a:motion_wise)
     execute 'normal!' '`[' . l:v . '`]y'
     let l:reg = escape(@0, '!"$\')
+    let l:opt = '-CIO -Mutf8 '. l:opt
 
     if l:opt[-1:] != 'e'
       let l:rex = g:opeperllib. l:rex
