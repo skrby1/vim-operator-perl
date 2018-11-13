@@ -20,7 +20,7 @@ function! operator#perl#do(motion_wise)
     endif
 
     if a:motion_wise != 'line'
-      let l:sys = "echo -en '". l:reg. "' | perl ". l:opt. " '". l:rex. "' ". l:aug
+      let l:sys = "echo -en '". l:reg. "' | perl ". l:opt. " \"". l:rex. "\" ". l:aug
       call setreg('0', system(l:sys))
       let l:ai = &autoindent
       let l:si = &smartindent
