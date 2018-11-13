@@ -5,6 +5,7 @@ function! operator#perl#do(motion_wise)
 
   if l:rex != ''
     "echoerr a:motion_wise
+    let @0 = ''
     let l:v = operator#user#visual_command_from_wise_name(a:motion_wise)
     execute 'normal!' '`[' . l:v . '`]y'
     let l:reg = @0
@@ -19,23 +20,19 @@ function! operator#perl#do(motion_wise)
       let l:aug = '-- '. l:aug
     endif
 
-    l:rex = escape(l:rex, '"')
-    if a:motion_wise != 'line'
-      let l:sys = "echo -en '". l:reg. "' | perl ". l:opt. " \"". l:rex. "\" ". l:aug
-      call setreg('0', system(l:sys))
-      let l:ai = &autoindent
-      let l:si = &smartindent
-      set noautoindent nosmartindent
-      if match(getreg('0'), '\n') != -1
-        execute 'normal' '`['. l:v. '`]"0p`]'
-      else
-        execute 'normal' '`['. l:v. '`]"0gp'
-      endif
-      let &autoindent = l:ai
-      let &smartindent = l:si
+    let l:rex = escape(l:rex, '"!$#')
+    let l:sys = "echo -en ". shellescape(l:reg). " | perl ". l:opt. " \"". l:rex. "\" ". l:aug
+    call setreg('0', system(l:sys))
+    let l:ai = &autoindent
+    let l:si = &smartindent
+    set noautoindent nosmartindent
+    if match(getreg('0'), '\n') != -1
+      execute 'normal' '`['. l:v. '`]"0p`]'
     else
-      execute "'<,'>!perl ". l:opt. " '". l:rex. "' ". l:aug
+      execute 'normal' '`['. l:v. '`]"0gp'
     endif
+    let &autoindent = l:ai
+    let &smartindent = l:si
   endif
 endfunction
 
