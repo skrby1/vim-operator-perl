@@ -19,6 +19,7 @@ function! operator#perl#do(motion_wise)
       let l:aug = '-- '. l:aug
     endif
 
+    l:rex = escape(l:rex, '"')
     if a:motion_wise != 'line'
       let l:sys = "echo -en '". l:reg. "' | perl ". l:opt. " \"". l:rex. "\" ". l:aug
       call setreg('0', system(l:sys))
