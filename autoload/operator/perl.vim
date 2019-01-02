@@ -21,7 +21,7 @@ function! operator#perl#do(motion_wise)
     endif
 
     let l:rex = escape(l:rex, '"!$#')
-    let l:sys = "echo -en ". shellescape(l:reg). " | perl ". l:opt. " \"". l:rex. "\" ". l:aug
+    let l:sys = "echo -en ". shellescape(escape(l:reg,'\')). " | perl ". l:opt. " \"". l:rex. "\" ". l:aug
     call setreg('0', system(l:sys))
     let l:ai = &autoindent
     let l:si = &smartindent
