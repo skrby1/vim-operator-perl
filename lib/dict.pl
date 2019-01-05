@@ -1,4 +1,8 @@
 #!/usr/bin/perl -w
+
+#dict.pl 指定したテキストを辞書サイトで検索かけて表示する
+#LWPモジュールが必要なので、cpanmなどで入れておいてください
+
 use strict;
 use LWP::UserAgent;
 

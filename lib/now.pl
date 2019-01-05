@@ -1,4 +1,7 @@
 #!/usr/bin/perl -w
+
+#now.pl 指定したテキストの前後等に現在時刻を付ける
+
 use strict;
 
 my @md = (localtime)[4,3];

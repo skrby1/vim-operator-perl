@@ -1,4 +1,7 @@
 #!/usr/bin/perl -w
+
+#eval.pl 指定したテキストをPerlスクリプトと解釈して結果を表示する
+
 use strict;
 
 my $in;

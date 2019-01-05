@@ -1,4 +1,7 @@
 #!/usr/bin/perl -w
+
+#sfl.pl 指定したテキストをシャッフルして置き換える
+
 use strict;
 use List::Util;
 
