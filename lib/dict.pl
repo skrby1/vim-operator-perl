@@ -4,6 +4,7 @@
 #LWPモジュールが必要なので、cpanmなどで入れておいてください
 
 use strict;
+use Encode qw(encode decode);
 use LWP::UserAgent;
 
 chomp(my $word = <STDIN>);
@@ -28,7 +29,7 @@ if ($wordcnt < 2){
 
 #Check the outcome of the responce
   if($res->is_success) {
-    $meaning = $res->content;
+    $meaning = decode('UTF-8', $res->content);
     if ($meaning !~ /見つかりませんでした/s) {
       $meaning =~ s/\A.+?<meta name=\"description\" content=\".+?\s(.+?)\s-\s.+\Z/$1/s;
       $meaning = "[".$meaning."]";
@@ -48,7 +49,7 @@ if ($wordcnt < 2){
 #Check the outcome of the responce
   if($res->is_success) {
     my $check;
-    $antonym = $res->content;
+    $antonym = decode('UTF-8', $res->content);
     if ($antonym!~ /見つかりませんでした/s) {
       $antonym=~ s/\A.+?<meta name=\"description\" content=\"(.+?)\s-\s.+\Z/$1/s;
       $antonym = "<-> [".$antonym."]";
