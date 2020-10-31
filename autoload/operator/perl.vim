@@ -7,7 +7,7 @@ function! operator#perl#do(motion_wise)
     "echoerr a:motion_wise
     let @0 = ''
     let l:v = operator#user#visual_command_from_wise_name(a:motion_wise)
-    execute 'normal!' '`[' . l:v . '`]y'
+    execute 'normal! ' . '`[' . l:v . '`]y'
     let l:reg = @0
     let l:opt = '-CIO -Mutf8 '. l:opt
 

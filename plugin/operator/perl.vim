@@ -8,4 +8,4 @@ endif
 
 let g:opeperllib = expand('<sfile>:p:h:h:h') . '/lib/'
 
-let g:loaded_operator_perl = 1
+let g:loaded_operator_perl = 0
