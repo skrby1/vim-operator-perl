@@ -4,10 +4,11 @@
 
 use strict;
 
-my @md = (localtime)[4,3];
-$md[0] = $md[0] + 1;
+my @ymd = (localtime)[5,4,3];
+$ymd[0] = sprintf("%02d", $ymd[0] % 100);
+$ymd[1] = $ymd[1] + 1;
 my @hms = (localtime)[2,1,0];
-my $out = "[". join('/', @md). " ". join(':', @hms). "]";
+my $out = "[". join('/', @ymd). " ". join(':', @hms). "]";
 
 my $in;
 {
